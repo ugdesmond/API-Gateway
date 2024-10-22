@@ -45,46 +45,7 @@ export class IntegratorController {
     private readonly serviceClient: ClientProxy,
   ) {}
 
-  @Post('apiKey/regenerate')
-  @Roles(RoleEnum.INTEGRATOR)
-  @ApiAcceptedResponse({ type: ApiKeyPayload })
-  async generateAPIkey(
-    @Body() regenerateDto: RegenerateApiKeyDto,
-    @Req() req: Request,
-  ) {
-    const userId = (req as any).user.id;
-    return this.serviceClient.send('authRevokeIntegratorApikey', {
-      userId,
-      ...regenerateDto,
-    });
-  }
-
-  @Get('apiKey/retrieve/:integratorId')
-  @ApiOkResponse({ type: ApiKeyPayload })
-  async getApiKey(
-    @Param('integratorId') integratorId: string,
-    @Req() req: Request,
-  ) {
-    const userId = (req as any).user.id;
-    return this.serviceClient.send('authGetApikeyByIntegratorId', {
-      userId,
-      integratorId,
-    });
-  }
-
-  @Post('create')
-  @ApiOkResponse({ type: CreateIntegratorDto })
-  async addBusiness(
-    @Body() businessDto: CreateIntegratorDto,
-    @Req() req: Request,
-  ) {
-    const userId = (req as any).user.id;
-
-    return this.serviceClient.send('authCreateIntegrator', {
-      userId,
-      ...businessDto,
-    });
-  }
+  
 
   @Get(':id')
   @ApiOkResponse({ type: CreateIntegratorDto })
